@@ -1,8 +1,10 @@
 <template>
   <div class="carousel-wrapper">
-    <button class="button">👈</button>
+    <button class="button" @click="scrollLeft" :disabled="isCarouselMoving">
+      👈
+    </button>
     <nav>
-      <ul class="product-list">
+      <ul class="product-list" ref="productList">
         <li
           v-for="product in shuffledProducts"
           :key="product.id"
@@ -18,16 +20,27 @@
         </li>
       </ul>
     </nav>
-    <button class="button">👉</button>
+    <button class="button" @click="scrollRight" :disabled="isCarouselMoving">
+      👉
+    </button>
   </div>
 </template>
 
 <script>
-import { shuffleArray } from "./utility";
+import {
+  shuffleArray,
+  productWidth,
+  getNumberOfVisibleCarouselItems,
+} from "./utility";
 
 export default {
   mounted() {
     this.shuffledProducts = shuffleArray(this.products);
+    this.$nextTick(() => {
+      this.$refs.productList.scrollTo({
+        left: productWidth,
+      });
+    });
   },
   props: {
     products: Array,
@@ -35,7 +48,28 @@ export default {
   data() {
     return {
       shuffledProducts: [],
+      isCarouselMoving: false,
     };
+  },
+  methods: {
+    scrollRight: function () {
+      if (!this.isCarouselMoving) {
+        this.isCarouselMoving = true;
+        this.$refs.productList.scrollBy({
+          left: productWidth,
+          behavior: "smooth",
+        });
+      }
+    },
+    scrollLeft: function () {
+      if (!this.isCarouselMoving) {
+        this.isCarouselMoving = true;
+        this.$refs.productList.scrollBy({
+          left: -productWidth,
+          behavior: "smooth",
+        });
+      }
+    },
   },
 };
 </script>
@@ -76,7 +110,7 @@ export default {
 }
 
 @media (max-width: 1280px) {
-  #product-list {
+  .product-list {
     width: calc(3 * 240px);
   }
   .product {
@@ -85,7 +119,7 @@ export default {
 }
 
 @media (max-width: 920px) {
-  #product-list {
+  .product-list {
     width: calc(2 * 240px);
   }
   .product {

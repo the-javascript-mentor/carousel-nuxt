@@ -1,3 +1,5 @@
+const productWidth = 240;
+
 const shuffleArray = (array) => {
   // Fisher-Yates shuffle
   // https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle
@@ -21,6 +23,17 @@ const shuffleArray = (array) => {
   return arrayCopy;
 };
 
-export { shuffleArray };
+const getNumberOfVisibleCarouselItems = () => {
+  let items = 4;
+  if (window.matchMedia("(max-width: 1280px)").matches) {
+    items = 3;
+  }
+  if (window.matchMedia("(max-width: 920px)").matches) {
+    items = 2;
+  }
+  return items;
+};
 
-export default { shuffleArray };
+export { shuffleArray, productWidth, getNumberOfVisibleCarouselItems };
+
+export default { shuffleArray, productWidth, getNumberOfVisibleCarouselItems };
