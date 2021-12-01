@@ -4,7 +4,7 @@
       👈
     </button>
     <nav>
-      <ul class="product-list" ref="productList">
+      <ul class="product-list" ref="productList" @scroll="scrollHandler">
         <li
           v-for="product in shuffledProducts"
           :key="product.id"
@@ -68,6 +68,47 @@ export default {
           left: -productWidth,
           behavior: "smooth",
         });
+      }
+    },
+    scrollHandler: function () {
+      if (this.$refs.productList.scrollLeft % productWidth === 0) {
+        this.isCarouselMoving = false;
+        // If we scrolled all the way to the left,
+        // move the last item in the first position
+        if (this.$refs.productList.scrollLeft === 0) {
+          this.shuffledProducts = [
+            this.shuffledProducts[this.shuffledProducts.length - 1],
+            ...this.shuffledProducts.slice(0, -1),
+          ];
+          // Scroll to the second last element
+          this.$nextTick(() => {
+            this.$refs.productList.scrollTo({
+              left: productWidth,
+            });
+          });
+        }
+        // If we scrolled all the way to the right,
+        // move the first item in the last position
+        if (
+          this.$refs.productList.scrollLeft ===
+          productWidth *
+            (this.shuffledProducts.length - getNumberOfVisibleCarouselItems())
+        ) {
+          this.shuffledProducts = [
+            ...this.shuffledProducts.slice(1),
+            this.shuffledProducts[0],
+          ];
+          // Scroll to the second last element
+          this.$nextTick(() => {
+            this.$refs.productList.scrollTo({
+              left:
+                productWidth *
+                (this.shuffledProducts.length -
+                  getNumberOfVisibleCarouselItems() -
+                  1),
+            });
+          });
+        }
       }
     },
   },
