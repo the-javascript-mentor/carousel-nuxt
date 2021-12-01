@@ -59,7 +59,33 @@ export default {
   },
   methods: {
     windowResize: function () {
-      this.numberOfVisibleCarouselItems = getNumberOfVisibleCarouselItems();
+      const newNumberOfVisibleCarouselItems = getNumberOfVisibleCarouselItems();
+      const areWeSuddenlyShowingMoreItems =
+        newNumberOfVisibleCarouselItems > this.numberOfVisibleCarouselItems;
+      if (
+        newNumberOfVisibleCarouselItems !== this.numberOfVisibleCarouselItems
+      ) {
+        this.numberOfVisibleCarouselItems = newNumberOfVisibleCarouselItems;
+        if (areWeSuddenlyShowingMoreItems) {
+          // If we're all the way to the right
+          if (
+            this.$refs.productList.scrollLeft ===
+            productWidth *
+              (this.shuffledProducts.length - this.numberOfVisibleCarouselItems)
+          ) {
+            // Scroll back by one product
+            this.$nextTick(() => {
+              this.$refs.productList.scrollTo({
+                left:
+                  productWidth *
+                  (this.shuffledProducts.length -
+                    this.numberOfVisibleCarouselItems -
+                    1),
+              });
+            });
+          }
+        }
+      }
     },
     scrollRight: function () {
       if (!this.isCarouselMoving) {
