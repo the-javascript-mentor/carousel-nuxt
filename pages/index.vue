@@ -1,7 +1,15 @@
 <template>
-  <Tutorial/>
+  <Carousel :products="products" />
 </template>
 
 <script>
-export default {}
+import products from "./products";
+
+export default {
+  data() {
+    return {
+      products,
+    };
+  },
+};
 </script>
