@@ -180,7 +180,6 @@ export default {
   display: flex;
   flex-flow: row nowrap;
   overflow: hidden;
-  overflow-x: auto;
   scroll-snap-type: x mandatory;
 }
 
