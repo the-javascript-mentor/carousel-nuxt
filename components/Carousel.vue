@@ -4,7 +4,7 @@
       👈
     </button>
     <nav>
-      <ul class="product-list" ref="productList" @scroll="scrollHandler">
+      <ul class="product-list" ref="productList" @scroll="productListScroll">
         <li
           v-for="product in shuffledProducts"
           :key="product.id"
@@ -41,6 +41,8 @@ export default {
         left: productWidth,
       });
     });
+    this.numberOfVisibleCarouselItems = getNumberOfVisibleCarouselItems();
+    window.addEventListener("resize", this.windowResize);
   },
   props: {
     products: Array,
@@ -49,9 +51,16 @@ export default {
     return {
       shuffledProducts: [],
       isCarouselMoving: false,
+      numberOfVisibleCarouselItems: 4,
     };
   },
+  destroyed() {
+    window.removeEventListener("resize", this.windowResize);
+  },
   methods: {
+    windowResize: function () {
+      this.numberOfVisibleCarouselItems = getNumberOfVisibleCarouselItems();
+    },
     scrollRight: function () {
       if (!this.isCarouselMoving) {
         this.isCarouselMoving = true;
@@ -70,7 +79,7 @@ export default {
         });
       }
     },
-    scrollHandler: function () {
+    productListScroll: function () {
       if (this.$refs.productList.scrollLeft % productWidth === 0) {
         this.isCarouselMoving = false;
         // If we scrolled all the way to the left,
@@ -92,7 +101,7 @@ export default {
         if (
           this.$refs.productList.scrollLeft ===
           productWidth *
-            (this.shuffledProducts.length - getNumberOfVisibleCarouselItems())
+            (this.shuffledProducts.length - this.numberOfVisibleCarouselItems)
         ) {
           this.shuffledProducts = [
             ...this.shuffledProducts.slice(1),
@@ -104,7 +113,7 @@ export default {
               left:
                 productWidth *
                 (this.shuffledProducts.length -
-                  getNumberOfVisibleCarouselItems() -
+                  this.numberOfVisibleCarouselItems -
                   1),
             });
           });
