@@ -43,6 +43,12 @@ export default {
     });
     this.numberOfVisibleCarouselItems = getNumberOfVisibleCarouselItems();
     window.addEventListener("resize", this.windowResize);
+    this.autoplayIntervalId = setInterval(() => {
+      this.$refs.productList.scrollBy({
+        left: productWidth,
+        behavior: "smooth",
+      });
+    }, 5000);
   },
   props: {
     products: Array,
@@ -52,6 +58,7 @@ export default {
       shuffledProducts: [],
       isCarouselMoving: false,
       numberOfVisibleCarouselItems: 4,
+      autoplayIntervalId: null,
     };
   },
   destroyed() {
@@ -88,6 +95,7 @@ export default {
       }
     },
     scrollRight: function () {
+      clearInterval(this.autoplayIntervalId);
       if (!this.isCarouselMoving) {
         this.isCarouselMoving = true;
         this.$refs.productList.scrollBy({
@@ -97,6 +105,7 @@ export default {
       }
     },
     scrollLeft: function () {
+      clearInterval(this.autoplayIntervalId);
       if (!this.isCarouselMoving) {
         this.isCarouselMoving = true;
         this.$refs.productList.scrollBy({
