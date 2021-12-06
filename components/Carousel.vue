@@ -31,6 +31,8 @@ import {
   shuffleArray,
   productWidth,
   getNumberOfVisibleCarouselItems,
+  moveLastItemInTheFirstPosition,
+  moveFirstItemInTheLastPosition,
 } from "./utility";
 
 export default {
@@ -120,10 +122,9 @@ export default {
         // If we scrolled all the way to the left,
         // move the last item in the first position
         if (this.$refs.productList.scrollLeft === 0) {
-          this.shuffledProducts = [
-            this.shuffledProducts[this.shuffledProducts.length - 1],
-            ...this.shuffledProducts.slice(0, -1),
-          ];
+          this.shuffledProducts = moveLastItemInTheFirstPosition(
+            this.shuffledProducts
+          );
           // Scroll to the second last element
           this.$nextTick(() => {
             this.$refs.productList.scrollTo({
@@ -138,10 +139,9 @@ export default {
           productWidth *
             (this.shuffledProducts.length - this.numberOfVisibleCarouselItems)
         ) {
-          this.shuffledProducts = [
-            ...this.shuffledProducts.slice(1),
-            this.shuffledProducts[0],
-          ];
+          this.shuffledProducts = moveFirstItemInTheLastPosition(
+            this.shuffledProducts
+          );
           // Scroll to the second last element
           this.$nextTick(() => {
             this.$refs.productList.scrollTo({

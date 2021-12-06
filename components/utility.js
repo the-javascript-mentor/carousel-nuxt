@@ -23,6 +23,13 @@ const shuffleArray = (array) => {
   return arrayCopy;
 };
 
+const moveLastItemInTheFirstPosition = (array) => [
+  array[array.length - 1],
+  ...array.slice(0, -1),
+];
+
+const moveFirstItemInTheLastPosition = (array) => [...array.slice(1), array[0]];
+
 const getNumberOfVisibleCarouselItems = () => {
   let items = 4;
   if (window.matchMedia("(max-width: 1280px)").matches) {
@@ -34,6 +41,18 @@ const getNumberOfVisibleCarouselItems = () => {
   return items;
 };
 
-export { shuffleArray, productWidth, getNumberOfVisibleCarouselItems };
+export {
+  shuffleArray,
+  productWidth,
+  getNumberOfVisibleCarouselItems,
+  moveLastItemInTheFirstPosition,
+  moveFirstItemInTheLastPosition,
+};
 
-export default { shuffleArray, productWidth, getNumberOfVisibleCarouselItems };
+export default {
+  shuffleArray,
+  productWidth,
+  getNumberOfVisibleCarouselItems,
+  moveLastItemInTheFirstPosition,
+  moveFirstItemInTheLastPosition,
+};
