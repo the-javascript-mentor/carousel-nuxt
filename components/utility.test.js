@@ -1,4 +1,8 @@
-import { shuffleArray } from "./utility";
+import {
+  shuffleArray,
+  moveLastItemInTheFirstPosition,
+  moveFirstItemInTheLastPosition,
+} from "./utility";
 
 describe("shuffleArray", () => {
   it("should return an array of the same size", () => {
@@ -30,5 +34,21 @@ describe("shuffleArray", () => {
     originalArray.forEach((element) => {
       expect(shuffledArray).toContain(element);
     });
+  });
+});
+
+describe("moveLastItemInTheFirstPosition", () => {
+  it("should work correctly", () => {
+    const originalArray = [1, 2, 3, 4, 5];
+    const updatedArray = moveLastItemInTheFirstPosition(originalArray);
+    expect(updatedArray).toEqual([5, 1, 2, 3, 4]);
+  });
+});
+
+describe("moveFirstItemInTheLastPosition", () => {
+  it("should work correctly", () => {
+    const originalArray = [1, 2, 3, 4, 5];
+    const updatedArray = moveFirstItemInTheLastPosition(originalArray);
+    expect(updatedArray).toEqual([2, 3, 4, 5, 1]);
   });
 });
