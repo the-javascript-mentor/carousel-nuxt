@@ -1,14 +1,26 @@
 <template>
   <div class="carousel-wrapper">
-    <button class="button" @click="scrollLeft" :disabled="isCarouselMoving">
+    <button
+      class="button"
+      @click="scrollLeft"
+      :disabled="isCarouselMoving"
+      data-test-id="previous"
+    >
       👈
     </button>
     <nav>
-      <ul class="product-list" ref="productList" @scroll="productListScroll">
+      <ul
+        class="product-list"
+        ref="productList"
+        @scroll="productListScroll"
+        data-test-id="product-list"
+      >
         <li
-          v-for="product in shuffledProducts"
+          v-for="(product, productIndex) in shuffledProducts"
           :key="product.id"
           class="product"
+          data-test-id="product"
+          :data-test-index="productIndex"
         >
           <a href="">
             <img :src="product.image" :alt="product.name" />
@@ -20,7 +32,12 @@
         </li>
       </ul>
     </nav>
-    <button class="button" @click="scrollRight" :disabled="isCarouselMoving">
+    <button
+      class="button"
+      @click="scrollRight"
+      :disabled="isCarouselMoving"
+      data-test-id="next"
+    >
       👉
     </button>
   </div>

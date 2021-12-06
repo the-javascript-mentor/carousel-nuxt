@@ -7,7 +7,8 @@
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",
-    "test": "jest"
+    "test": "jest",
+    "cypress": "./node_modules/cypress/bin/cypress open"
   },
   "dependencies": {
     "@babel/core": "^7.16.0",
@@ -21,6 +22,7 @@
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/vue": "^5.8.2",
+    "cypress": "^9.1.1",
     "jest": "^27.4.3",
     "vue-template-compiler": "^2.6.14"
   }

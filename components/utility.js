@@ -1,6 +1,7 @@
 const productWidth = 240;
 
 const shuffleArray = (array) => {
+  return array;
   // Fisher-Yates shuffle
   // https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle
   const arrayCopy = [...array];
