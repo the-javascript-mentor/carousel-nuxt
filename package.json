@@ -15,6 +15,7 @@
     "nuxt": "^2.15.7"
   },
   "devDependencies": {
+    "@testing-library/vue": "^5.8.2",
     "jest": "^27.4.3"
   }
 }
